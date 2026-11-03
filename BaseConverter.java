@@ -18,6 +18,8 @@ import java.util.Deque;
  */
 public class BaseConverter {
 
+    //hello again
+
     /** The smallest base supported. */
     public static final int MIN_BASE = 2;
 
