@@ -19,7 +19,7 @@ public class BaseConverterTest {
         assertEquals(0, BaseConverter.digitValue('0'));
         assertEquals(3, BaseConverter.digitValue('3'));
         assertEquals(9, BaseConverter.digitValue('9'));
-        assertEquals(10, BaseConverter.digitValue('A'));
+        assertEquals(10, BaseConverter.digitValue('a'));
         assertEquals(35, BaseConverter.digitValue('Z'));
         assertEquals(-1, BaseConverter.digitValue('%'));
     }

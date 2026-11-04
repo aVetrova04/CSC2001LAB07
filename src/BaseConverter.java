@@ -37,6 +37,8 @@ public class BaseConverter {
      * Example: digitValue('7') is 7, digitValue('d') is 13, digitValue('?') is -1.
      */
     public static int digitValue(char ch) {
+        ch = Character.toUpperCase(ch);
+
         if (DIGITS.indexOf(ch) != -1) {
             return DIGITS.indexOf(ch);
         }
@@ -49,16 +51,33 @@ public class BaseConverter {
      * null or empty, if any character is not a valid digit in that base, or
      * if the value is larger than Integer.MAX_VALUE
      */
-    public static int toDecimal(String digits, int base) {
-        // TODO: check the base and the digits, then read the digits left to right:
-        //       value = value * base + digit
-        //       (keep value in a long so you can tell when it passes Integer.MAX_VALUE)
-        if (base < MIN_BASE || base > MAX_BASE) {
-            return -1;
-        }
+        public static int toDecimal(String digits, int base) {
 
-            return 0;
-    }
+            if (base < MIN_BASE || base > MAX_BASE) {
+                throw new IllegalArgumentException("Invalid base");
+            }
+
+            if (digits == null || digits.isEmpty()) {
+                throw new IllegalArgumentException("Digits cannot be null or empty");
+            }
+
+            long total = 0;
+
+            for (int i = 0; i < digits.length(); i++) {
+                int value = digitValue(digits.charAt(i));
+
+                if (value == -1 || value >= base) {
+                    throw new IllegalArgumentException("Invalid digit");
+                }
+
+                total = total * base + value;
+                if (total > Integer.MAX_VALUE) {
+                    throw new IllegalArgumentException("Number too large");
+                }
+            }
+
+            return (int) total;
+        }
 
     // ---------------------------------------------------------------
     // Part 2: writing digits, using a stack
