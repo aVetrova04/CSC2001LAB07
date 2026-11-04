@@ -37,14 +37,12 @@ public class BaseConverter {
      * Example: digitValue('7') is 7, digitValue('d') is 13, digitValue('?') is -1.
      */
     public static int digitValue(char ch) {
-        if (0 <= ch <= 35) {
+        if (DIGITS.indexOf(ch) != -1) {
             return DIGITS.indexOf(ch);
-        else {
-            return -1;
         }
+        return -1;
     }
-
-    /**
+        /**
      * Returns the value of digits read as a number in the given base
      * Example: toDecimal("101101", 2) and toDecimal("2D", 16) both return 45.
      * throws IllegalArgumentException if base is not 2 to 36, if digits is
@@ -55,7 +53,11 @@ public class BaseConverter {
         // TODO: check the base and the digits, then read the digits left to right:
         //       value = value * base + digit
         //       (keep value in a long so you can tell when it passes Integer.MAX_VALUE)
-        return 0;
+        if (base < MIN_BASE || base > MAX_BASE) {
+            return -1;
+        }
+
+            return 0;
     }
 
     // ---------------------------------------------------------------

@@ -11,7 +11,18 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class BaseConverterTest {
 
+
     // ---- starter tests ----
+
+    @Test
+    void convertTest() {
+        assertEquals(0, BaseConverter.digitValue('0'));
+        assertEquals(3, BaseConverter.digitValue('3'));
+        assertEquals(9, BaseConverter.digitValue('9'));
+        assertEquals(10, BaseConverter.digitValue('A'));
+        assertEquals(35, BaseConverter.digitValue('Z'));
+        assertEquals(-1, BaseConverter.digitValue('%'));
+    }
 
     @Test
     void toDecimalLectureExamples() {
