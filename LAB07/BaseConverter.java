@@ -18,10 +18,6 @@ import java.util.Deque;
  */
 public class BaseConverter {
 
-    //hello again
-    //trail number 5
-    
-
     /** The smallest base supported. */
     public static final int MIN_BASE = 2;
 
@@ -41,8 +37,11 @@ public class BaseConverter {
      * Example: digitValue('7') is 7, digitValue('d') is 13, digitValue('?') is -1.
      */
     public static int digitValue(char ch) {
-        // TODO
-        return -1;
+        if (0 <= ch <= 35) {
+            return DIGITS.indexOf(ch);
+        else {
+            return -1;
+        }
     }
 
     /**
