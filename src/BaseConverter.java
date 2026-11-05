@@ -134,18 +134,10 @@ public class BaseConverter {
     public static String toBaseRec(int n, int base) {
         checkBase(base);
         checkNonNegative(n);
-
-        // base case n = 0
-        // store digitChar(n % base)
-        // n = n / base
-
-        if (n == 0) {
-            return "0";
+        if (n < base) {
+            return "" + digitChar(n);
         }
-
-        StringBuilder sb = new StringBuilder();
-
-        return sb.append(toBaseRec(n/base, base)).toString();
+        return toBaseRec(n / base, base) + digitChar(n % base);
     }
 
     /**
@@ -158,16 +150,10 @@ public class BaseConverter {
     public static int countDigits(int n, int base) {
         checkBase(base);
         checkNonNegative(n);
-
-        // base case n = 0
-        // store digitChar(n % base)
-        // n = n / base
-
-        if (n == 0) {
-            return 0;
+        if (n < base) {
+            return 1;
         }
-
-        return 1 + countDigits(n/base, base);
+        return 1 + countDigits(n / base, base);
     }
 
     // ---------------------------------------------------------------

@@ -55,12 +55,36 @@ public class BaseConverterTest {
     }
 
     @Test
+    void toBaseStudentMade() {
+        assertEquals("0", BaseConverter.toBase(0, 10));
+        assertEquals("9", BaseConverter.toBase(9, 10));
+        assertEquals("100", BaseConverter.toBase(256, 16));
+        assertEquals("FF", BaseConverter.toBase(255, 16));
+        assertEquals("7FFFFFFF", BaseConverter.toBase(Integer.MAX_VALUE, 16));
+        assertThrows(IllegalArgumentException.class, () -> {BaseConverter.toBase(-1, 10);});
+        assertThrows(IllegalArgumentException.class, () -> {BaseConverter.toBase(45, 1);});
+        assertThrows(IllegalArgumentException.class, () -> {BaseConverter.toBase(45, 37);});
+    }
+
+    @Test
     void toBaseRecTest() {
         assertEquals("101101", BaseConverter.toBase(45, 2));
         assertEquals("55", BaseConverter.toBase(45, 8));
         assertEquals("2D", BaseConverter.toBase(45, 16));
         assertEquals("1200", BaseConverter.toBase(45, 3));
         assertEquals("45", BaseConverter.toBase(45, 10));
+    }
+
+    @Test
+    void toBaseRecStudentMade() {
+        assertEquals("0", BaseConverter.toBaseRec(0, 10));
+        assertEquals("9", BaseConverter.toBaseRec(9, 10));
+        assertEquals("100", BaseConverter.toBaseRec(256, 16));
+        assertEquals("FF", BaseConverter.toBaseRec(255, 16));
+        assertEquals("7FFFFFFF", BaseConverter.toBaseRec(Integer.MAX_VALUE, 16));
+        assertThrows(IllegalArgumentException.class, () -> {BaseConverter.toBaseRec(-1, 10);});
+        assertThrows(IllegalArgumentException.class, () -> {BaseConverter.toBaseRec(45, 1);});
+        assertThrows(IllegalArgumentException.class, () -> {BaseConverter.toBaseRec(45, 37);});
     }
 
 
@@ -71,16 +95,38 @@ public class BaseConverterTest {
         assertEquals(2, BaseConverter.countDigits(45, 16));
     }
 
-    // TODO: add your own tests. At a minimum, cover:
-    //   - toDecimal throws IllegalArgumentException for: a digit too big for the
-    //     base ("129" in base 8), a non-digit character ("-45", "4 5"), null,
-    //     "", a bad base (1 or 37), and a value larger than Integer.MAX_VALUE
-    //   - digitChar: 0, 9, 10, 35, and -1 / 36 throwing
-    //   - toBase and toBaseRec: 0, single digits, powers of the base,
-    //     Integer.MAX_VALUE, uppercase letters, negative n and bad bases throwing
-    //   - countDigits: 0, boundaries like 9/10 and 99/100, 1024 in base 2,
-    //     negative n and bad bases throwing
-    //   - a loop over many values of n and every base 2-36 checking that
-    //     toDecimal(toBase(n, base), base) == n, and that your answers match
-    //     Integer.toString(n, base).toUpperCase()
+    @Test
+    void countDigitsStudentMade() {
+        assertEquals(1, BaseConverter.countDigits(0, 10));
+        assertEquals(1, BaseConverter.countDigits(9, 10));
+        assertEquals(2, BaseConverter.countDigits(10, 10));
+        assertEquals(2, BaseConverter.countDigits(99, 10));
+        assertEquals(3, BaseConverter.countDigits(100, 10));
+        assertEquals(11, BaseConverter.countDigits(1024, 2));
+        assertThrows(IllegalArgumentException.class, () -> {BaseConverter.countDigits(-1, 10);});
+        assertThrows(IllegalArgumentException.class, () -> {BaseConverter.countDigits(45, 1);});
+        assertThrows(IllegalArgumentException.class, () -> {BaseConverter.countDigits(45, 37);});
+    }
+
+    @Test
+    void digitCharStudentMade() {
+        assertEquals('0', BaseConverter.digitChar(0));
+        assertEquals('9', BaseConverter.digitChar(9));
+        assertEquals('A', BaseConverter.digitChar(10));
+        assertEquals('Z', BaseConverter.digitChar(35));
+        assertThrows(IllegalArgumentException.class, () -> {BaseConverter.digitChar(-1);});
+        assertThrows(IllegalArgumentException.class, () -> {BaseConverter.digitChar(36);});
+    }
+
+    @Test
+    void conversionLoopTest() {
+        for (int n = 0; n <= 999; n++) {
+            for (int base = 2; base <= 36; base++) {
+                String converted = BaseConverter.toBase(n, base);
+                assertEquals(n, BaseConverter.toDecimal(converted, base));
+                assertEquals(Integer.toString(n, base).toUpperCase(), converted);
+                assertEquals(converted, BaseConverter.toBaseRec(n, base));
+            }
+        }
+    }
 }
