@@ -22,6 +22,7 @@ public class BaseConverterTest {
         assertEquals(10, BaseConverter.digitValue('a'));
         assertEquals(35, BaseConverter.digitValue('Z'));
         assertEquals(-1, BaseConverter.digitValue('%'));
+        assertEquals(-1, BaseConverter.digitValue('/'));
     }
 
     @Test
@@ -31,6 +32,17 @@ public class BaseConverterTest {
         assertEquals(45, BaseConverter.toDecimal("2D", 16));
         assertEquals(45, BaseConverter.toDecimal("1200", 3));
         assertEquals(4725, BaseConverter.toDecimal("4725", 10));
+    }
+
+    @Test
+    void toDecimalLectureStudentMade() {
+        assertEquals(0, BaseConverter.toDecimal("0", 2));
+        assertEquals(45, BaseConverter.toDecimal("00055", 8));
+        assertEquals(45, BaseConverter.toDecimal("2d", 16));
+        assertEquals(2, BaseConverter.toDecimal("10", 2));
+        assertEquals(36, BaseConverter.toDecimal("10", 36));
+        assertThrows(IllegalArgumentException.class, () -> {BaseConverter.toDecimal("11111", 35);});
+        assertThrows(IllegalArgumentException.class, () -> {BaseConverter.toDecimal("11111", 36);});
     }
 
     @Test
@@ -60,10 +72,6 @@ public class BaseConverterTest {
     }
 
     // TODO: add your own tests. At a minimum, cover:
-    //   - digitValue: digits, upper- and lowercase letters, and characters that
-    //     are not digits (including the ones just before/after '0'-'9', 'A'-'Z', 'a'-'z')
-    //   - toDecimal: lowercase letters, "0" and leading zeros, base 2 and base 36,
-    //     Integer.MAX_VALUE in a few bases
     //   - toDecimal throws IllegalArgumentException for: a digit too big for the
     //     base ("129" in base 8), a non-digit character ("-45", "4 5"), null,
     //     "", a bad base (1 or 37), and a value larger than Integer.MAX_VALUE
