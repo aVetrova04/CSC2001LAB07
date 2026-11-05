@@ -156,8 +156,18 @@ public class BaseConverter {
      * throws IllegalArgumentException if n is negative or base is not 2 to 36
      */
     public static int countDigits(int n, int base) {
-        // TODO: no loops - use recursion
-        return 0;
+        checkBase(base);
+        checkNonNegative(n);
+
+        // base case n = 0
+        // store digitChar(n % base)
+        // n = n / base
+
+        if (n == 0) {
+            return 0;
+        }
+
+        return 1 + countDigits(n/base, base);
     }
 
     // ---------------------------------------------------------------
