@@ -3,6 +3,6 @@ public class Main {
         String test = "101101";
         int base = 2;
 
-        System.out.println(BaseConverter.toDecimal(test, base));
+        System.out.println(BaseConverter.toBaseRec(101101, 2));
     }
 }

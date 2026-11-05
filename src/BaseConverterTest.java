@@ -43,6 +43,16 @@ public class BaseConverterTest {
     }
 
     @Test
+    void toBaseRecTest() {
+        assertEquals("101101", BaseConverter.toBase(45, 2));
+        assertEquals("55", BaseConverter.toBase(45, 8));
+        assertEquals("2D", BaseConverter.toBase(45, 16));
+        assertEquals("1200", BaseConverter.toBase(45, 3));
+        assertEquals("45", BaseConverter.toBase(45, 10));
+    }
+
+
+    @Test
     void countDigitsLectureExamples() {
         assertEquals(4, BaseConverter.countDigits(4725, 10));
         assertEquals(6, BaseConverter.countDigits(45, 2));

@@ -52,10 +52,7 @@ public class BaseConverter {
      * if the value is larger than Integer.MAX_VALUE
      */
         public static int toDecimal(String digits, int base) {
-
-            if (base < MIN_BASE || base > MAX_BASE) {
-                throw new IllegalArgumentException("Invalid base");
-            }
+            checkBase(base);
 
             if (digits == null || digits.isEmpty()) {
                 throw new IllegalArgumentException("Digits cannot be null or empty");
@@ -90,8 +87,8 @@ public class BaseConverter {
      * throws IllegalArgumentException if value is not 0 to 35
      */
     public static char digitChar(int value) {
-        // TODO
-        return '?';
+        checkNonNegative(value);
+        return DIGITS.charAt(value);
     }
 
     /**
@@ -103,9 +100,24 @@ public class BaseConverter {
      * throws IllegalArgumentException if n is negative or base is not 2 to 36
      */
     public static String toBase(int n, int base) {
-        // TODO: push each remainder onto the stack, then pop them off
+        checkBase(base);
+        checkNonNegative(n);
+
+        if (n == 0) {
+            return "0";
+        }
+
         Deque<Character> stack = new ArrayDeque<>();
-        return "";
+        while (n > 0) {
+            stack.push(digitChar(n % base));
+            n =  n / base;
+        }
+        StringBuilder newStr = new StringBuilder();
+
+        for (; !stack.isEmpty(); ) {
+            newStr.append(stack.pop());
+        }
+        return newStr.toString();
     }
 
     // ---------------------------------------------------------------
@@ -120,8 +132,20 @@ public class BaseConverter {
      * throws IllegalArgumentException if n is negative or base is not 2 to 36
      */
     public static String toBaseRec(int n, int base) {
-        // TODO: no loops and no stack - use recursion
-        return "";
+        checkBase(base);
+        checkNonNegative(n);
+
+        // base case n = 0
+        // store digitChar(n % base)
+        // n = n / base
+
+        if (n == 0) {
+            return "0";
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        return sb.append(toBaseRec(n/base, base)).toString();
     }
 
     /**
@@ -142,11 +166,15 @@ public class BaseConverter {
 
     /** Throws IllegalArgumentException unless base is 2 to 36. */
     private static void checkBase(int base) {
-        // TODO
+        if (base < MIN_BASE || base > MAX_BASE) {
+            throw new IllegalArgumentException("Invalid base");
+        }
     }
 
     /** Throws IllegalArgumentException if n is negative. */
     private static void checkNonNegative(int n) {
-        // TODO
+        if (n < 0) {
+            throw new IllegalArgumentException("Invalid number");
+        }
     }
 }
