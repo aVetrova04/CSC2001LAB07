@@ -88,6 +88,9 @@ public class BaseConverter {
      */
     public static char digitChar(int value) {
         checkNonNegative(value);
+        if (value>=MAX_BASE) {
+            throw new IllegalArgumentException("Base size not supported");
+        }
         return DIGITS.charAt(value);
     }
 

@@ -41,8 +41,12 @@ public class BaseConverterTest {
         assertEquals(45, BaseConverter.toDecimal("2d", 16));
         assertEquals(2, BaseConverter.toDecimal("10", 2));
         assertEquals(36, BaseConverter.toDecimal("10", 36));
-        assertThrows(IllegalArgumentException.class, () -> {BaseConverter.toDecimal("11111", 35);});
-        assertThrows(IllegalArgumentException.class, () -> {BaseConverter.toDecimal("11111", 36);});
+        assertThrows(IllegalArgumentException.class, () -> {BaseConverter.toDecimal("11111111111111", 35);});
+        assertThrows(IllegalArgumentException.class, () -> {BaseConverter.toDecimal("11111111111111", 36);});
+        assertThrows(IllegalArgumentException.class, () -> {BaseConverter.toDecimal("-1", 35);});
+        assertThrows(IllegalArgumentException.class, () -> {BaseConverter.toDecimal(null, 36);});
+        assertThrows(IllegalArgumentException.class, () -> {BaseConverter.toDecimal("", 36);});
+        assertThrows(IllegalArgumentException.class, () -> {BaseConverter.toDecimal("35", 2);});
     }
 
     @Test
